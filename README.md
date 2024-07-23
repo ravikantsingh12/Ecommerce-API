@@ -1,6 +1,6 @@
 # Ecommerce Platform API
 
-This API provides endpoints to manage productinventory for an ecommerce platform.
+This API provides endpoints to manage product inventory for an ecommerce platform.
 It utilizes Node.js with Express for the backend and MongoDB for data storage.
 
 ## Features
