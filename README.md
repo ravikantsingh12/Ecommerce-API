@@ -9,6 +9,9 @@ It utilizes Node.js with Express for the backend and MongoDB for data storage.
 - Update product quantities dynamically.
 - Secure API endpoints with basic error handling.
 
+## Live Site
+[Click here](https://ecommerce-api-t8ix.onrender.com/products) to visit the live site.
+
 ## Prerequisites
 
 Before you begin, ensure you have met the following requirements:
