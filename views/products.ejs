@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECOM API | Product Inventory</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #ecf0f1, #bdc3c7); /* Light Gray to Gray Gradient */
+        }
+        header {
+            background: #3498db; /* Bright Blue */
+            color: #fff;
+            padding-top: 30px;
+            min-height: 70px;
+            border-bottom: #2980b9 3px solid; /* Darker Blue */
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 600;
+        }
+        .container {
+            background: #fff; /* White Background */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+        .container:hover {
+            transform: scale(1.01);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        th {
+            background: #3498db; /* Bright Blue */
+            color: #fff;
+        }
+        tr:nth-child(even) {
+            background: #f9f9f9; /* Light Gray */
+        }
+        tr:hover {
+            background: #f1f1f1; /* Slightly Darker Gray */
+        }
+        a {
+            color: #3498db; /* Bright Blue */
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .button {
+            background: #3498db; /* Bright Blue */
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-align: center;
+            display: inline-block;
+            margin: 5px;
+            text-decoration: none;
+            border: none;
+            font-size: 14px;
+            transition: background 0.3s ease;
+        }
+        .button:hover {
+            background: #2980b9; /* Darker Blue */
+        }
+        .modal-content {
+            border-radius: 0.5rem;
+        }
+        .modal-header {
+            background: #3498db; /* Bright Blue */
+            color: #fff;
+        }
+        .modal-footer .btn-secondary {
+            background: #95a5a6; /* Gray */
+            border: none;
+        }
+        .modal-footer .btn-secondary:hover {
+            background: #7f8c8d; /* Darker Gray */
+        }
+        .btn-danger {
+            background: #e74c3c; /* Red */
+            border: none;
+        }
+        .btn-danger:hover {
+            background: #c0392b; /* Darker Red */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><strong>Ecommerce API : Product Inventory</strong></h1>
+    </header>
+    <div class="container">
+        <strong>Streamline your inventory management with our intuitive Ecommerce Application. You can easily add, update, and manage products here!</strong><hr>
+        <a href="/products/create" class="button">Add New Product</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Quantity</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% products.forEach(product => { %>
+                    <tr>
+                        <td><strong><%= product.name %></strong></td>
+                        <td><strong><%= product.quantity %></strong></td>
+                        <td>
+                            <a href="/products/<%= product._id %>/update" class="button">Update Quantity</a>
+                            <form action="/products/<%= product._id %>/delete" method="POST" style="display:inline;">
+                                <button type="submit" class="button btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Bootstrap Modal -->
+    <div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="notificationModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="notificationModalLabel">Notification</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="modalBody">
+                    <!-- Message will be injected here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function showModal(message) {
+            const modalBody = document.getElementById('modalBody');
+            modalBody.textContent = message;
+            $('#notificationModal').modal('show');
+        }
+
+        // Show modal if there's a message
+        const urlParams = new URLSearchParams(window.location.search);
+        const message = urlParams.get('message');
+        if (message) {
+            showModal(message);
+        }
+    </script>
+</body>
+</html>
